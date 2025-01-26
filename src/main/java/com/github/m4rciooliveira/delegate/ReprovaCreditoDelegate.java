@@ -23,6 +23,8 @@ public class ReprovaCreditoDelegate implements JavaDelegate {
 
         aprovacao.setStatusAprovacao(StatusAprovacao.REPROVADO);
 
+        aprovacao.setStatusAprovacao(StatusAprovacao.APROVADO);
+
         Map<String, Object> variables = new HashMap<>();
         variables.put(VariableName.APROVACAO_DOMAIN, aprovacao);
 
