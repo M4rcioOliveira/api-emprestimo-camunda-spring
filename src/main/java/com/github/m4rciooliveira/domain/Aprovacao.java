@@ -25,5 +25,6 @@ public class Aprovacao implements Serializable {
     private BigDecimal valorSolicitado;
     private BigDecimal valorParcela;
     private StatusAprovacao statusAprovacao;
+    private String aprovador;
 
 }
