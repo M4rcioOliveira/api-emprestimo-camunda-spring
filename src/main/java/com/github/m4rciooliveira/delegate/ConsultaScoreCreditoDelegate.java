@@ -1,7 +1,6 @@
 package com.github.m4rciooliveira.delegate;
 
 import com.github.m4rciooliveira.constants.VariableName;
-import com.github.m4rciooliveira.controller.dto.LoanRequestDTO;
 import com.github.m4rciooliveira.domain.Aprovacao;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -26,16 +25,16 @@ public class ConsultaScoreCreditoDelegate implements JavaDelegate {
 
         log.info("Iniciando a execução do {}", this.getClass().getSimpleName());
 
-        LoanRequestDTO dto = (LoanRequestDTO) delegateExecution.getVariable(VariableName.LOAN_REQUEST_DTO);
+        Aprovacao aprovacao = (Aprovacao) delegateExecution.getVariable(VariableName.APROVACAO_DOMAIN);
 
-        log.info("CPF {} ", dto.cpf());
+        log.info("CPF {} ", aprovacao.getCpf());
 
         var cpfs = Set.of("40697903060", "81761679082");
 
         var score = 0;
 
         //Lógica usada para substituir uma api ou algum outro provedor de score.
-        if (cpfs.contains(dto.cpf())) {
+        if (cpfs.contains(aprovacao.getCpf())) {
             score = SCORE_MIN + RANDOM.nextInt(SCORE_BOUND); //Se o CPF está na lista, pontuação ente 700 e 1000.
         } else {
             score = RANDOM.nextInt(SCORE_MIN);  //Se não estiver, pontuação até 699.
@@ -43,11 +42,7 @@ public class ConsultaScoreCreditoDelegate implements JavaDelegate {
 
         log.info("SCORE {}", score);
 
-        var aprovacao = Aprovacao.builder()
-                .cpf(dto.cpf())
-                .renda(dto.renda())
-                .score(score)
-                .build();
+        aprovacao.setScore(score);
 
         Map<String, Object> variables = new HashMap<>();
         variables.put(VariableName.APROVACAO_DOMAIN, aprovacao);

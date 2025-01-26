@@ -3,6 +3,7 @@ package com.github.m4rciooliveira.controller;
 import com.github.m4rciooliveira.constants.ProcessName;
 import com.github.m4rciooliveira.constants.VariableName;
 import com.github.m4rciooliveira.controller.dto.LoanRequestDTO;
+import com.github.m4rciooliveira.domain.Aprovacao;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
@@ -32,8 +33,14 @@ public class LoanController {
     @PostMapping
     public ResponseEntity<Void> solicitar(@RequestBody LoanRequestDTO dto) {
 
+        Aprovacao aprovacao =  Aprovacao.builder()
+                .cpf(dto.cpf())
+                .valorSolicitado(dto.valor())
+                .renda(dto.renda())
+                .build();
+
         Map<String, Object> variables = new HashMap<>();
-        variables.put(VariableName.LOAN_REQUEST_DTO, dto);
+        variables.put(VariableName.APROVACAO_DOMAIN, aprovacao);
 
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ProcessName.VERIFICA_SCORE_CREDITO, variables);
 

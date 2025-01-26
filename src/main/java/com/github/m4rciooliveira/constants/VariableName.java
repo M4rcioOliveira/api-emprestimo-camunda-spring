@@ -5,6 +5,6 @@ public final class VariableName {
     private VariableName() {
     }
 
-    public static final String LOAN_REQUEST_DTO = "loanRequestDTO";
+    public static final String APROVACAO_DOMAIN = "aprovacaoDomain";
 
 }
