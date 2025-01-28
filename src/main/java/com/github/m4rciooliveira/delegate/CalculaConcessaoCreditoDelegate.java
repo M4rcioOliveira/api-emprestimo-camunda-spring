@@ -2,12 +2,15 @@ package com.github.m4rciooliveira.delegate;
 
 import com.github.m4rciooliveira.constants.VariableName;
 import com.github.m4rciooliveira.domain.Aprovacao;
+import com.github.m4rciooliveira.util.ConverterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import static com.github.m4rciooliveira.util.ConverterUtil.strToBigDecimal;
 
 
 @Slf4j
@@ -20,14 +23,17 @@ public class CalculaConcessaoCreditoDelegate implements JavaDelegate {
 
         Aprovacao aprovacao = (Aprovacao) delegateExecution.getVariable(VariableName.APROVACAO_DOMAIN);
 
-        var valorParcela = calculaValorParcela(aprovacao.getValorSolicitado(), aprovacao.getRenda());
-
-        aprovacao.setValorParcela(valorParcela);
+        calculaConcessao(aprovacao);
 
     }
 
     //Simula uma concessão de crédito obtendo o valor da parcela com base na margem da renda em cima do valor solicitado com juros
-    private BigDecimal calculaValorParcela(BigDecimal valorSolicitado, BigDecimal renda) {
+    //Calculo simples adicionando 120% em cima do valor do pedio
+    private void calculaConcessao(Aprovacao aprovacao) {
+
+        var valorSolicitado = strToBigDecimal(aprovacao.getValorSolicitado());
+
+        var renda = strToBigDecimal(aprovacao.getRenda());
 
         var juros = valorSolicitado.multiply(BigDecimal.valueOf(1.2));
 
@@ -44,10 +50,12 @@ public class CalculaConcessaoCreditoDelegate implements JavaDelegate {
         log.info("Valor Margem = {}", margem);
 
         if (valorParcela.compareTo(margem) > 0) {
-            return BigDecimal.ZERO;
+            aprovacao.setValorParcela(ConverterUtil.bigDecimalToStr(BigDecimal.ZERO));
+            aprovacao.setValorEmprestimo(ConverterUtil.bigDecimalToStr(BigDecimal.ZERO));
+        } else {
+            aprovacao.setValorParcela(ConverterUtil.bigDecimalToStr(valorParcela));
+            aprovacao.setValorEmprestimo(ConverterUtil.bigDecimalToStr(valorSolicitadoComJuros));
         }
-
-        return valorParcela;
 
     }
 

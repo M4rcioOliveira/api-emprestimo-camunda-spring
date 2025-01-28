@@ -34,7 +34,7 @@ public class ConsultaScoreCreditoDelegate implements JavaDelegate {
         var score = 0;
 
         //Lógica usada para substituir uma api ou algum outro provedor de score.
-        if (cpfs.contains(aprovacao.getCpf())) {
+        if (cpfs.contains(aprovacao.getCpf().replaceAll("\\D", ""))) {
             score = SCORE_MIN + RANDOM.nextInt(SCORE_BOUND); //Se o CPF está na lista, pontuação ente 700 e 1000.
         } else {
             score = RANDOM.nextInt(SCORE_MIN);  //Se não estiver, pontuação até 699.

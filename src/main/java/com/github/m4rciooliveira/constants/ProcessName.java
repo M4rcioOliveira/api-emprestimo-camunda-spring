@@ -5,6 +5,6 @@ public final class ProcessName {
     private ProcessName() {
     }
 
-    public static final String VERIFICA_SCORE_CREDITO = "LOAN";
+    public static final String LOAN = "LOAN";
 
 }

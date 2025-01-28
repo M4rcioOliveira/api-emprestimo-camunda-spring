@@ -4,6 +4,7 @@ import com.github.m4rciooliveira.constants.ProcessName;
 import com.github.m4rciooliveira.constants.VariableName;
 import com.github.m4rciooliveira.controller.dto.LoanRequestDTO;
 import com.github.m4rciooliveira.domain.Aprovacao;
+import com.github.m4rciooliveira.util.FormatterUtil;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/loan")
@@ -33,8 +35,9 @@ public class LoanController {
     @PostMapping
     public ResponseEntity<Void> solicitar(@RequestBody LoanRequestDTO dto) {
 
-        Aprovacao aprovacao =  Aprovacao.builder()
-                .cpf(dto.cpf())
+        Aprovacao aprovacao = Aprovacao.builder()
+                .id(String.valueOf(UUID.randomUUID()))
+                .cpf(FormatterUtil.cpfMask(dto.cpf()))
                 .valorSolicitado(dto.valor())
                 .renda(dto.renda())
                 .tipoEmprestimo(dto.tipoEmprestimo())
@@ -43,9 +46,9 @@ public class LoanController {
         Map<String, Object> variables = new HashMap<>();
         variables.put(VariableName.APROVACAO_DOMAIN, aprovacao);
 
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ProcessName.VERIFICA_SCORE_CREDITO, variables);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ProcessName.LOAN, variables);
 
-        log.info("Execução do processo de {} iniciado com o ID {}", ProcessName.VERIFICA_SCORE_CREDITO, processInstance.getId());
+        log.info("Execução do processo de {} iniciado com o ID {}", ProcessName.LOAN, processInstance.getId());
 
         return new ResponseEntity<>(HttpStatus.CREATED);
 

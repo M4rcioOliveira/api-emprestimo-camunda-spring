@@ -6,11 +6,9 @@ import com.github.m4rciooliveira.domain.enums.TipoEmprestimo;
 import lombok.*;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,12 +16,15 @@ import java.math.BigDecimal;
 @Setter
 public class Aprovacao implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    private String id;
     private String cpf;
-    private BigDecimal renda;
+    private String renda;
     private Integer score;
     private TipoEmprestimo tipoEmprestimo;
-    private BigDecimal valorSolicitado;
-    private BigDecimal valorParcela;
+    private String valorSolicitado;
+    private String valorEmprestimo;
+    private String valorParcela;
     private StatusAprovacao statusAprovacao;
     private String aprovador;
 
