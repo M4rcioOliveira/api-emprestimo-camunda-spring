@@ -41,7 +41,7 @@ public class CalculaConcessaoCreditoDelegate implements JavaDelegate {
 
         var margem = renda.multiply(BigDecimal.valueOf(0.3));
 
-        log.info("Valor Margem = {}", valorParcela);
+        log.info("Valor Margem = {}", margem);
 
         if (valorParcela.compareTo(margem) > 0) {
             return BigDecimal.ZERO;

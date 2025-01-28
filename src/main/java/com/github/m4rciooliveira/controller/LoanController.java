@@ -37,6 +37,7 @@ public class LoanController {
                 .cpf(dto.cpf())
                 .valorSolicitado(dto.valor())
                 .renda(dto.renda())
+                .tipoEmprestimo(dto.tipoEmprestimo())
                 .build();
 
         Map<String, Object> variables = new HashMap<>();
