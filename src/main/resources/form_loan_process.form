@@ -1,0 +1,136 @@
+{
+  "components": [
+    {
+      "label": "APROVAR/REPROVAR",
+      "values": [
+        {
+          "label": "Aprovar",
+          "value": "APROVADO"
+        },
+        {
+          "label": "Reprovado",
+          "value": "REPROVADO"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0pqg4tp",
+        "columns": null
+      },
+      "id": "Field_1u78sdr",
+      "key": "statusAprovacao",
+      "description": "Selecione APROVAR ou REPROVAR para seguir com o processo de empréstimo consignado.",
+      "properties": {},
+      "searchable": false,
+      "readonly": false
+    },
+    {
+      "label": "Dados do Solicitante",
+      "components": [
+        {
+          "label": "ID",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0cgfrbk",
+            "columns": null
+          },
+          "id": "Field_0zjp9ub",
+          "key": "id",
+          "disabled": true,
+          "properties": {}
+        },
+        {
+          "label": "CPF",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0cgfrbk",
+            "columns": null
+          },
+          "id": "Field_0kue9x3",
+          "key": "cpf",
+          "disabled": true
+        },
+        {
+          "label": "VALOR SOLICITADO",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_08i57xs",
+            "columns": null
+          },
+          "id": "Field_0apql1d",
+          "key": "valorSolicitado",
+          "disabled": true
+        },
+        {
+          "label": "RENDA",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_08i57xs",
+            "columns": null
+          },
+          "id": "Field_05iv06g",
+          "key": "renda",
+          "disabled": true
+        },
+        {
+          "type": "separator",
+          "layout": {
+            "row": "Row_05gp220",
+            "columns": null
+          },
+          "id": "Field_0ubua7s"
+        },
+        {
+          "label": "Dados do Empréstimo",
+          "components": [
+            {
+              "label": "VALOR PARCELA",
+              "type": "textfield",
+              "layout": {
+                "row": "Row_1kek7i4",
+                "columns": null
+              },
+              "id": "Field_0iy66fc",
+              "key": "valorParcela",
+              "disabled": true
+            },
+            {
+              "label": "VALOR EMPRÉSTIMO",
+              "type": "textfield",
+              "layout": {
+                "row": "Row_1kek7i4",
+                "columns": null
+              },
+              "id": "Field_062k5he",
+              "key": "valorEmprestimo",
+              "disabled": true
+            }
+          ],
+          "showOutline": true,
+          "type": "group",
+          "layout": {
+            "row": "Row_1lhjbae",
+            "columns": null
+          },
+          "id": "Field_1q0lhks"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_1wrdral",
+        "columns": null
+      },
+      "id": "Field_1rn3ww0"
+    }
+  ],
+  "type": "default",
+  "id": "form_consignado_v1",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.31.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.22.0",
+  "schemaVersion": 18
+}
