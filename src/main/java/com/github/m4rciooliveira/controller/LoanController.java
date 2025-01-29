@@ -5,6 +5,11 @@ import com.github.m4rciooliveira.constants.VariableName;
 import com.github.m4rciooliveira.controller.dto.LoanRequestDTO;
 import com.github.m4rciooliveira.domain.Aprovacao;
 import com.github.m4rciooliveira.util.FormatterUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
@@ -22,6 +27,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/loan")
+@Tag(name = "Loan", description = "API para solicitação de empréstimo.")
 public class LoanController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -33,6 +39,14 @@ public class LoanController {
     }
 
     @PostMapping
+    @Operation(
+            summary = "Solicitar Empréstimo.",
+            description = "Sensibiliza o Camunda pra registrar uma nova instância de solicitação de empréstimo.",
+            responses = {
+                    @ApiResponse(responseCode = "201", description = "Solitação realizada.",
+                            content = @Content(schema = @Schema(implementation = LoanRequestDTO.class))),
+            }
+    )
     public ResponseEntity<Void> solicitar(@RequestBody LoanRequestDTO dto) {
 
         Aprovacao aprovacao = Aprovacao.builder()
