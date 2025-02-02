@@ -4,3 +4,8 @@ spring.jpa.hibernate.ddl-auto: create-drop
 camunda.bpm.admin-user:
   id: admin
   password: admin
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
